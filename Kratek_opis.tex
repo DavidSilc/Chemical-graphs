@@ -1,0 +1,68 @@
+\documentclass{article}
+\setlength{\parindent}{0pt}
+\hyphenpenalty=1000
+\tolerance=1000
+\sloppy
+
+
+
+\begin{document}
+
+\section*{Skupina 18: Kemijski grafi}
+\textit{Avtorja: David Planinšek Šilc, Lenart Žerdin \\ Datum: 20. 12. 2024 \\}
+
+
+Najina tema je raziskovanje kemijskih grafov in njihovega totalnega $\sigma$-indeksa iregularnosti.
+
+\subsection*{Opis problema}
+
+Graf je kemijski, če so vsa njegova vozlišča stopnje največ 4. Če ima kemijski graf $a_i$ vozlišč stopnje $i$, $1 \leq i \leq 4$, potem njegovo stopenjsko zaporedje označimo kot $(1^{a_1}, 2^{a_2}, 3^{a_3}, 4^{a_4})$. \\
+
+Definiramo totalni $\sigma$-indeks iregularnosti, v angleščini `Total $\sigma$-irregularity', $\sigma_t^{f(n)}(G)$ kot
+\[
+\sigma_t^{f(n)}(G) = \sum_{\{u,v\} \subseteq V(G)} \left| d_G(u) - d_G(v) \right|^{f(n)},
+\]
+kjer je $n = |V(G)|$ in je $f(n)$ funkcija, definirana za $n \geq 4$. \\
+
+
+Očitno je, da je minimalna vrednost $\sigma_t^{f(n)}$ dosežena z regularnimi grafi, ki jih na primer ponazarjajo strukture, kot so cikel $C_n$ ali grafi z stopnjskimi zaporedji, kot so $(1^0, 2^0, 3^0, 4^n)$. 
+Zato se osredotočamo na kemijske grafe, ki dosegajo maksimalno vrednost $\sigma_t^{f(n)}$.
+
+\subsubsection*{Izrek}
+Naj bo $n \geq 7$, $f(n) \leq \log_3 \left( \frac{3n^2}{3n^2 - 8} \right)$, in naj bo $(1^{a_1}, 2^{a_2}, 3^{a_3}, 4^{a_4})$ stopenjsko zaporedje kemijskega grafa $G$ z maksimalno vrednostjo $\sigma_t^{f(n)}(G)$. Potem velja:
+\begin{enumerate}
+    \item Če $n = 4k - 1$, potem $a_1 = a_3 = a_4 = k$ in $a_2 = k - 1$.
+    \item Če $n = 4k$, potem $a_1 = a_2 = a_3 = a_4 = k$.
+    \item Če $n = 4k + 1$, potem $a_1 = a_2 = a_3 = k$ in $a_4 = k + 1$.
+    \item Če $n = 4k + 2$, potem velja bodisi $a_1 = a_3 = k$ in $a_2 = a_4 = k + 1$, bodisi $a_1 = a_3 = k + 1$ in $a_2 = a_4 = k$. 
+\end{enumerate}
+
+Ker je za kemijske grafe razlika med stopnjami vozlišč omejena, domnevamo naslednje: 
+
+\begin{itemize}
+    \item \textbf{Domneva 1:} Isti grafi, kot v Izreku, imajo maksimalno vrednost za $\sigma_t^{f(n)}$, če je $f(n) = \frac{1}{n}$. 
+    \item \textbf{Domneva 2:} Isti grafi, kot v Izreku, imajo maksimalno vrednost za $\sigma_t^{f(n)}$, če je $f(n) = c$, kjer je $c$ konstanta v intervalu $(0, 1)$. 
+
+\end{itemize}
+
+
+\subsection*{Potek dela}
+
+
+\begin{enumerate}
+    \item Implementirala bova algoritmem za sistematično iskanje vseh možnih stopenjskih zaporedij za 
+    kemijske grafe do števila vozlišč $n=10$, saj se čas iskanja eksponentno povečuje.
+    \item Za vsako stopenjsko zaporedje bova izračunala $\sigma_t^{f(n)}(G)$ z ustrezno funkcijo $f(n)= \frac{1}{n}$
+     ali $f(n)= c$, $c \in (0,1)$, in jih uredila po velikosti. Osredotočila se bova na $c$ -je, ki so blizu $0$ oziroma $1$.
+    \item Za obe funkciji in za različne parametre $c$ bova preverila ujemanje s 
+    posledicama izreka. 
+    \item Implementirala bova algoritmem za stohastično iskanje stopnejskih zaporedij za kemijske grafe za $n>10$.
+    Najna hipoteza je, da je za večji totalni $\sigma$-indeks biti števila stopenjskega zaporedja blizu skupaj. 
+    Algoritem bo začel z nekim naključnim grafom, nato pa bo iterativno mutiral trenutni graf, tj. odstranil in dodal po 1 povezavo tako, da bo graf še vedno kemijski,
+    in izračunal vrednost $\sigma_t^{f(n)}$ za mutiran graf.
+    Če mutirani graf izboljša vrednost $\sigma_t^{f(n)}$, ga agoritem sprejme kot trenutni graf.
+    Po končnem številu iteracij bo algoritem vrnil stopenjsko zaporedje, kjer je bil dosežen maksimum, torej trenutnega grafa.
+
+\end{enumerate}
+
+\end{document}
